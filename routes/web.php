@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Cookie;
 use App\Http\Controllers\AuthController;
@@ -20,13 +21,9 @@ Route::view("termsAndConditions", "termsAndConditions.termsAndConditions");
 Route::get('/change_lang/{lang}', [OthersController::class, "change_lang"])->name("change_lang");
 
 Route::get('/', function () {
+    $dir = App::getLocale() == "ar" ? "rtl" : "ltr";
     $username = session('username');
-    return "
-    <center>
-    <h1>DASHBOARD</h1>
-    <h2>Welcom $username</h2>
-        <a href='logout'>Logout</a>
-    </center>";
+    return view('home', compact("dir", 'username'));
 })->name('home');
 
 Route::post('/try_login', [AuthController::class, "try_login"])->name('try_login');
@@ -36,4 +33,10 @@ Route::get('test', function () {
     $session = session('_token');
     $cookie = Cookie::get('laravel_session');
     dd($cookie);
+});
+Route::view('settings', 'settings');
+Route::get('settings', function () {
+    $dir = App::getLocale() == "ar" ? "rtl" : "ltr";
+    $username = session('username');
+    return view('settings', compact('dir', 'username'));
 });
