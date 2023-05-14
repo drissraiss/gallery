@@ -13,7 +13,7 @@
         @csrf
         <div class="form-outline mb-4">
             <label class="form-label" for="email">{{ __('login.email') }} :</label>
-            <input type="text" id="email" name="email" class="form-control form-control-lg" value="{{ old('email') }}"/>
+            <input type="text" id="email" name="email" class="form-control form-control-lg" value="{{ old('email') ?? $cookie_login_data->email }}"/>
             @error('email')
             <p class="text-danger">{{ $message }}</p>
             @enderror
@@ -25,7 +25,7 @@
 
         <div class="form-outline mb-4">
             <label class="form-label" for="password">{{ __('login.psw') }} :</label>
-            <input type="password" id="password" name="password" class="form-control form-control-lg" />
+            <input type="password" id="password" name="password" class="form-control form-control-lg" value="{{ $cookie_login_data->password }}"/>
             @error('password')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
@@ -33,8 +33,8 @@
 
         <div class="d-flex justify-content-around align-items-center mb-4">
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="form1Example3" />
-                <label class="form-check-label" for="form1Example3">{{ __('login.check') }}</label>
+                <input class="form-check-input" type="checkbox" name="remember_me" id="remember_me"/>
+                <label class="form-check-label" for="remember_me" >{{ __('login.check') }}</label>
             </div>
             {{--  <a href="#!">Forgot password?</a> --}}
         </div>

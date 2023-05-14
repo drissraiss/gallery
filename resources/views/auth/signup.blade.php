@@ -1,6 +1,6 @@
 @extends('auth.layouts.app')
 @section('form')
-    <form action="{{ route('try_create_account') }}" method="POST">
+    <form action="{{ route('try_signup') }}" method="POST">
         @csrf
         <div class="form-outline mb-4">
             <label class="form-label" for="username">{{ __('signup.username') }} :</label>
