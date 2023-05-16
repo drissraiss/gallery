@@ -1,19 +1,72 @@
 @extends('layouts.master')
+
 @section('content')
-    @for ($i = 0; $i < 20; $i++)
-        <div class="col mb-2 ">
-            <div class="card m-auto" style="width: 18rem;">
-                <img class="card-img-top" src="{{ asset('assets/gallery.jpg') }}">
-                <div class="card-body">
-                    <form action="" class="card-title">
-                        <input type="text" value="Name" readonly class="input-text-custom">
-                    </form>
-                    <p class="card-text">2022-05-10 10:20:36</p>
-                    <button class="btn btn-success"><i class="bi bi-arrows-angle-expand"></i></button>
-                    <button class="btn btn-primary"><i class="bi bi-download"></i></button>
-                    <a href="" class="btn btn-outline-danger"><i class="bi bi-trash-fill"></i></a>
+    <style>
+        #preview-div {
+            background-color: #e6e6e6;
+            width: 400px;
+        }
+    </style>
+    <div class="d-flex">
+        <div class="w-auto ">
+            <form action="{{ route('add_picture') }}" method="post" class="border content-bg p-3"
+                enctype="multipart/form-data">
+                @csrf
+                <h1 class="text-center">Add new picture</h1>
+                <div class="mb-3">
+                    <label for="picture_name" class="form-label">Name picture:</label>
+                    <input type="text" name="picture_name" id="picture_name" class="form-control"
+                        value="{{ old('picture_name') }}">
+                    @error('picture_name')
+                        <x-alert alert='Error' bg='danger' :message="$message" />
+                    @enderror
+                    @error('picture_name')
+                        <p class="text-danger">{{ $message }}
+                        </p>
+                    @enderror
                 </div>
+                <div class="mb-3">
+                    <label for="select_categories_home" class="form-label">Category:</label>
+                    <select name="select_categories_home" class="form-select" id="select_categories_home">
+                        <x-category_options :categories="$categories" selected="{{ old('select_categories_home') }}" />
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="picture" class="form-label">Picture:</label>
+                    <input type="file" accept="image/*" name="picture" id="picture" class="form-control">
+                    @error('picture')
+                        <x-alert alert='Error' bg='danger' :message="$message" />
+                    @enderror
+                    @error('picture')
+                        <p class="text-danger">{{ $message }}
+                        </p>
+                    @enderror
+                </div>
+                <button class="btn btn-success mb-3 w-100">Add Picture</button>
+            </form>
+
+        </div>
+
+        <div class="ms-4 d-flex" id="preview-div" style=";">
+            <img src="{{ asset('assets/gallery.jpg') }}"  class="" id="preview-img" style="display: none"
+                width="400px" alt="">
+            <div class="m-auto" id="preview-text">
+                Preview image
             </div>
         </div>
-    @endfor
+    </div>
+    <script>
+        let picture = document.getElementById('picture')
+        let preview_img = document.getElementById('preview-img')
+        let preview_text = document.getElementById('preview-text')
+        picture.onchange = (e) => update_preview(e)
+
+        function update_preview(event) {
+            preview_img.style.display = 'block'
+            preview_text.style.display = 'none'
+            let fileName = URL.createObjectURL(event.target.files[0])
+            preview_img.setAttribute('src', fileName)
+        }
+
+    </script>
 @endsection

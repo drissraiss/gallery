@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Rules\ValidUsername;
 use Illuminate\Http\Request;
+
+use App\Models\CategoryUser;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Cookie;
-use Illuminate\Support\Facades\Hash;
 
+use Illuminate\Support\Facades\Hash;
 use function PHPUnit\Framework\isNull;
+use Illuminate\Support\Facades\Cookie;
+
 
 class AuthController extends Controller
 {
@@ -54,7 +57,11 @@ class AuthController extends Controller
     }
     private function signup($data)
     {
-        DB::table('users')->insert($data);
+        $user_id = DB::table('users')->insertGetId($data);
+        CategoryUser::create(['name' => 'Personal', 'user_id' => $user_id]);
+        CategoryUser::create(['name' => 'Family', 'user_id' => $user_id]);
+        CategoryUser::create(['name' => 'Job', 'user_id' => $user_id]);
+        CategoryUser::create(['name' => 'Favorite', 'user_id' => $user_id]);
     }
     public function try_login(Request $request)
     {
@@ -83,7 +90,24 @@ class AuthController extends Controller
     }
     public function logout()
     {
-        session()->flush();
+        session()->forget(['id', 'connected']);
         return redirect()->route("login");
+    }
+    public function update_password(Request $request)
+    {
+        $request->validate([
+            'curr_password' => ['required'],
+            'password' => ['required', 'confirmed', 'min:8'],
+            'password_confirmation' => ['required'],
+        ]);
+        $curr_password = DB::table('users')->get()->where('id', session('id'))->value('password');
+        if(!Hash::check($request->curr_password, $curr_password)){
+            return redirect()->back()->with('error', 'The password you entered is incorrect');
+        }
+        $new_password = Hash::make($request->password);
+        DB::table('users')->update([
+            'password' => $new_password
+        ]);
+        return redirect()->back()->with('success', 'Password has been modified with successfully');
     }
 }

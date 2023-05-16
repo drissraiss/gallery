@@ -11,10 +11,14 @@ return new class extends Migration
     {
         Schema::create('pictures', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('path');
+            $table->string('name', 30);
+            $table->string('path', 50);
             $table->timestamps();
-            $table->foreignId('categorie_id')->constrained();
+            $table->unsignedBigInteger('category_id');
+            $table->foreign("category_id")
+            ->references("id")
+            ->on("categories")
+            ->onDelete("cascade");
         });
     }
 
