@@ -101,7 +101,7 @@ class AuthController extends Controller
             'password_confirmation' => ['required'],
         ]);
         $curr_password = DB::table('users')->get()->where('id', session('id'))->value('password');
-        if(!Hash::check($request->curr_password, $curr_password)){
+        if (!Hash::check($request->curr_password, $curr_password)) {
             return redirect()->back()->with('error', 'The password you entered is incorrect');
         }
         $new_password = Hash::make($request->password);
@@ -109,5 +109,18 @@ class AuthController extends Controller
             'password' => $new_password
         ]);
         return redirect()->back()->with('success', 'Password has been modified with successfully');
+    }
+    public function drop_account_user(Request $request)
+    {
+        $request->validate([
+            'password_drop_account' => 'required'
+        ]);
+        $curr_password = DB::table('users')->get()->where('id', session('id'))->value('password');
+        if (!Hash::check($request->password_drop_account, $curr_password)) {
+            return redirect()->back()->with('error', 'The password you entered is incorrect');
+        }
+        DB::table("users")->delete(session('id'));
+        session()->forget(['id', 'connected']);
+        return redirect()->route('login')->with('success', 'Your account has been deleted successfully');
     }
 }

@@ -15,7 +15,6 @@ class PictureController extends Controller
      */
     public function index()
     {
-        //
     }
 
     /**
@@ -26,9 +25,10 @@ class PictureController extends Controller
         $dir = App::getLocale() == "ar" ? "rtl" : "ltr";
         $username = session('username');
         $categories = CategoryUser::all()->where('user_id', session('id'));
-        $categories_with_count = (new CategoryUser())->get_categories_with_count();
-
-        return view('home', compact("dir", 'username', 'categories', 'categories_with_count'));
+        $categories_with_count = (new CategoryUser())->get_categories_with_count(session('id'));
+        $category_selected_id = null;
+        $category_selected_name = null;
+        return view('home', compact("dir", 'username', 'categories', 'categories_with_count', 'category_selected_id', 'category_selected_name'));
     }
 
     /**
@@ -84,16 +84,30 @@ class PictureController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        request()->validate([
+            'new_name_picture' => ['required', 'max:30']
+        ]);
+        $category_id = $request->category_id;
+        $picture_id = $request->picture_id;
+        $name = $request->new_name_picture;
+        $reponse = (new PictureUser())->update_picture_name($category_id, $picture_id, $name);
+        if ($reponse) {
+            return redirect()->back()->with('success', 'Image name changed successfully');
+        }
+        return redirect()->back()->with('error', 'Unable to change the name of the image, please try again later');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($category_id, $picture_id)
     {
-        //
+        $reponse = (new PictureUser())->destroy_picture($category_id, $picture_id);
+        if ($reponse) {
+            return redirect()->back()->with('success', 'The image has been deleted successfully');
+        }
+        return redirect()->back()->with('error', 'The image could not be deleted, please try again later');
     }
 }

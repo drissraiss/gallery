@@ -54,11 +54,12 @@
             background-color: transparent;
         }
 
-        .disabled-input * {
+        .disabled-input input,
+        .disabled-input select {
             pointer-events: none;
-            background-color: #f2f2f2;
+            background-color: #f5f5f5;
             /* Optionally, you can add additional styling to indicate the field is disabled */
-            color: #999999;
+            color: #9b9b9b;
         }
 
         .card-custom-1 {
@@ -67,6 +68,9 @@
 
         .content-bg {
             background-color: #e6e6e6
+        }
+        .selected-category-bg {
+            background-color: #0d6efd38
         }
     </style>
 </head>
@@ -77,6 +81,9 @@
     @elseif (session('error'))
         <x-alert alert="Error" bg="danger" message="{{ session('error') }}" />
     @endif
+    @if (session('category_not_found'))
+        <x-alert alert="Error" bg="danger" message="Sorry, this category does not exist" />
+    @endif
     @error('category_name_add')
         <x-alert alert="Error" bg="danger" :message="$message" />
     @enderror
@@ -86,7 +93,9 @@
     @error('picture_shortcut')
         <x-alert alert="Error" bg="danger" :message="$message" />
     @enderror
-
+    @error('new_name_picture')
+        <x-alert alert="Error" bg="danger" :message="$message" />
+    @enderror
     <div class="container-fluid">
         <div class="row ">
             <div class="col-auto p-0" id="nav-cat">
@@ -97,19 +106,19 @@
                             Gallery
                         </li>
                     </a>
-                    @forelse ($categories_with_count as $category_with_count)
+                    @foreach ($categories_with_count as $category_with_count)
                         <a href="{{ route('category', $category_with_count->category) }}" class="text-decoration-none">
                             <li
-                                class="list-group-item d-flex justify-content-between align-items-center position-static">
+                            class="list-group-item d-flex justify-content-between align-items-center position-static {{ $category_selected_name == $category_with_count->category ?  'fw-bold fst-italic' : '' }}">
                                 {{ $category_with_count->category }}
-                                <span class="badge bg-{{ $category_with_count->count == 0 ? '' : 'primary' }} badge-pill ms-5">{{ $category_with_count->count }}</span>
+                                <span
+                                    class="badge bg-{{ $category_with_count->count == 0 ? '' : 'primary' }} badge-pill ms-5">{{ $category_with_count->count == 0 ? '' : $category_with_count->count }}</span>
                             </li>
                         </a>
-                    @empty
-                    @endforelse
+                    @endforeach
                     <li class="ps-3 pe-3 pt-2 pb-2 border border-top-0 bg-white list-unstyled" id="add_category">
                         <span id="text_add_category">+ Add category</span>
-                        <form action="{{ route('add_category') }}" method="POST" style="display:none"  
+                        <form action="{{ route('add_category') }}" method="POST" style="display:none"
                             id="form_add_category">
                             @csrf
                             <input type="text" id="input_add_category" name="category_name_add" class="form-control"
@@ -124,16 +133,21 @@
                 <div class="row" id="nav-header">
                     <div class="col p-2 d-flex ">
                         <div class="col d-flex justify-content-between">
-                            <form action="{{ route('add_picture_shortcut') }}" method="post" enctype="multipart/form-data" 
+                            <form action="{{ route('add_picture_shortcut') }}" method="post"
+                                enctype="multipart/form-data"
                                 class="w-auto d-flex justify-content-between {{ count($categories) == 0 ? 'disabled-input' : '' }}">
                                 @csrf
-                                <input type="text" name="picture_name_shortcut" placeholder="Name picture"
-                                    class="w-auto form-control ">
+                                <input type="text" name="picture_name_shortcut" value="Picture"
+                                    placeholder="Name picture" class="w-auto form-control ">
                                 <select name="select_categories_home_shortcut" id="" class="ms-2 form-select">
-                                    <x-category_options :categories="$categories" selected="{{old('select_categories_home_shortcut')}}"/>
+                                    <x-category_options :categories="$categories"
+                                        selected="{{ old('select_categories_home_shortcut') ?? $category_selected_id }}" />
                                 </select>
-                                <input type="file" name="picture_shortcut" id="" class="ms-2 form-control">
-                                <button class="btn btn-success ms-2 ">Add</button>
+
+                                <input type="file" accept="image/*" name="picture_shortcut" id=""
+                                    class="ms-2 form-control">
+                                <button
+                                    class="btn btn-success ms-2 {{ count($categories) == 0 ? 'disabled' : '' }}">Add</button>
                             </form>
 
                             <li class="nav-item dropdown list-unstyled w-auto position-static">

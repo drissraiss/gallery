@@ -8,6 +8,7 @@
         </div>
     @endsection
 @endif
+
 @section('form')
     <form action="{{ route('try_login') }}" method="POST">
         @csrf

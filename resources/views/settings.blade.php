@@ -91,12 +91,17 @@
         </div>
         <button class="btn btn-danger w-100 mb-2 {{ count($categories) == 0 ? 'disabled' : '' }}">Remove category</button>
     </form>
-    <form action="" class="border mb-4">
+    <form action="{{ route('drop_account_user') }}" class="border mb-4" method="POST">
         @csrf
+        <input type="hidden" name="_method" value="DELETE">
         <h3>Remove account</h3>
         <div class="form-outline mb-4">
-            <label for="password_" class="form-label">Password:</label>
-            <input type="password" name="password_" class="form-control" id="password_">
+            <label for="password_drop_account" class="form-label">Password:</label>
+            <input type="password" name="password_drop_account" class="form-control" id="password_drop_account">
+            @error('password_drop_account')
+                <p class="text-danger">{{ $message }} </p>
+                <x-alert alert="Error" bg="danger" :message="$message" />
+            @enderror
         </div>
         <button class="btn btn-danger w-100 mb-2 ">Drop account</button>
     </form>

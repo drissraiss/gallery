@@ -20,7 +20,10 @@
 </head>
 
 <body dir="{{ $dir }}">
-    @yield("alert")
+    @yield('alert')
+    @if (session('success'))
+        <x-alert alert="Success" bg="success" message="{{ session('success') }}" />
+    @endif
     <div>
         <section class="vh-100">
             <div class="container py-5 h-100  ">
