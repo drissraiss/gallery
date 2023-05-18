@@ -2,9 +2,10 @@
 
 namespace App\Rules;
 
+use App\Models\CategoryUser;
 use Illuminate\Contracts\Validation\Rule;
 
-class ValidUsername implements Rule
+class NameCategory implements Rule
 {
     /**
      * Run the validation rule.
@@ -18,12 +19,14 @@ class ValidUsername implements Rule
     public function passes($attribute, $value)
     {
         // Define your validation logic here
-        return preg_match('/^[a-zA-Z0-9_-]+$/', $value);
+        //CategoryUser::
+        $name = $value;
+        $result = CategoryUser::where('name', $name)->where('user_id', session('id'))->exists();
+        return !$result;
     }
     public function message()
     {
         //return "The :attribute must contain only letters, numbers, underscores, and hyphens.";
-
-        return __('validation.username');
+        return __('validation.name_category');
     }
 }

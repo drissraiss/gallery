@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/favicon.ico') }}">
     <x-Bootstrap_css />
-    <title>{{ __('master.title') }}</title>
+    <title>{{ __('app.title') }}</title>
     <style>
         .divider:after,
         .divider:before {

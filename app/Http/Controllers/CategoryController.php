@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CategoryUser;
 use App\Models\PictureUser;
+use App\Rules\NameCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 
@@ -12,17 +13,17 @@ class CategoryController extends Controller
     public function add(Request $request)
     {
         $request->validate([
-            'category_name_add' => ['required', 'alphanum',  'min:2', 'max:12', 'unique:categories,name']
+            'category_name_add' => ['required', 'alphanum',  'min:2', 'max:12', new NameCategory()]
         ]);
         $category_name = request()->category_name_add;
         $user_id = session('id');
         CategoryUser::create(['name' => $category_name, 'user_id' => $user_id]);
-        return redirect()->route('category', [$category_name])->with('success', 'Category created successfully');;
+        return redirect()->route('category', [$category_name])->with('success', __('flash.cat_create_succ'));;
     }
     public function update(Request $request)
     {
         $request->validate([
-            'category_name' => ['required', 'alphanum',  'min:2', 'max:12', 'unique:categories,name']
+            'category_name' => ['required', 'alphanum',  'min:2', 'max:12', new NameCategory()]
         ]);
         $category_name = $request->category_name;
         $category_id = $request->category_id;
@@ -30,14 +31,14 @@ class CategoryController extends Controller
         CategoryUser::where('id', $category_id)
             ->where('user_id', $user_id)
             ->update(['name' => $category_name, 'user_id' => $user_id]);
-        return redirect()->back()->withInput()->with('success', 'Category name changed successfully');
+        return redirect()->back()->withInput()->with('success', __('flash.cat_name_change_succ'));
     }
     public function delete(Request $request)
     {
         $category_id = $request->category_delete;
         $user_id = session('id');
         CategoryUser::where('id', $category_id)->where('user_id', $user_id)->delete();
-        return redirect()->back()->with('success', 'The category has been deleted successfully');
+        return redirect()->back()->with('success', __('flash.cat_del_succ'));
     }
     public function show_category($category)
     {
@@ -48,7 +49,7 @@ class CategoryController extends Controller
         $category_id = CategoryUser::where('name', $category)->where('user_id', session('id'))->get('id')->first();
         
         if (is_null($category_id)) {
-            return redirect()->back()->with('category_not_found', 1);
+            return redirect()->back()->with('error', __('flash.cat_not_exist'));
         }
         
         $category_pictures = PictureUser::where('category_id', $category_id->id)->orderBy('created_at', 'desc')->paginate(8);

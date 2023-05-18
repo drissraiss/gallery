@@ -60,5 +60,6 @@ Route::delete('delete_picture/{category_id}/{picture_id}', [PictureController::c
 
 
 Route::get('test', function () {
-    return (new PictureUser())->destroy_picture(32, 16);
+    
+
 });

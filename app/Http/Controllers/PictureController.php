@@ -47,7 +47,7 @@ class PictureController extends Controller
         $img_path_name = date('Y_m_d_h_i_s_', time()) . $random_str . '.' . $picture->extension();
         $picture->move(public_path('storage\users_pictures'), $img_path_name);
         PictureUser::create(['name' => $img_name, 'path' => $img_path_name, 'category_id' => $category_id]);
-        return redirect()->back()->withInput()->with('success', 'Image uploaded successfully.');
+        return redirect()->back()->withInput()->with('success', __('flash.img_upl_succ'));
     }
     public function store(Request $request)
     {
@@ -62,7 +62,7 @@ class PictureController extends Controller
         $img_path_name = date('Y_m_d_h_i_s_', time()) . $random_str . '.' . $picture->extension();
         $picture->move(public_path('storage\users_pictures'), $img_path_name);
         PictureUser::create(['name' => $img_name, 'path' => $img_path_name, 'category_id' => $category_id]);
-        return redirect()->back()->withInput()->with('success', 'Image uploaded successfully.');
+        return redirect()->back()->withInput()->with('success', __('flash.img_upl_succ'));
     }
 
     /**
@@ -94,9 +94,9 @@ class PictureController extends Controller
         $name = $request->new_name_picture;
         $reponse = (new PictureUser())->update_picture_name($category_id, $picture_id, $name);
         if ($reponse) {
-            return redirect()->back()->with('success', 'Image name changed successfully');
+            return redirect()->back()->with('success', __('flash.img_name_change_succ'));
         }
-        return redirect()->back()->with('error', 'Unable to change the name of the image, please try again later');
+        return redirect()->back()->with('error', __('flash.change_name_try_againe'));
     }
 
     /**
@@ -106,8 +106,9 @@ class PictureController extends Controller
     {
         $reponse = (new PictureUser())->destroy_picture($category_id, $picture_id);
         if ($reponse) {
-            return redirect()->back()->with('success', 'The image has been deleted successfully');
+            return redirect()->back()->with('success', __('flash.img_del_succ'));
         }
-        return redirect()->back()->with('error', 'The image could not be deleted, please try again later');
+        return redirect()->back()->with('error', __('flash.img_del_err'));
+
     }
 }

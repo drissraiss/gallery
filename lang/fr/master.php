@@ -1,4 +1,6 @@
-<?php 
+<?php
 return [
-    "title" => "Galerie",
+    'add_category' => '+ Ajouter une catégorie',
+    'value_pic' => 'Image',
+    'add_pic' => 'Ajouter',
 ];

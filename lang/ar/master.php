@@ -1,4 +1,6 @@
-<?php 
+<?php
 return [
-    "title" => "المعرض",
+    'add_category' => '+ أضف فئة',
+    'value_pic' => 'صورة',
+    'add_pic' => 'أضف',
 ];

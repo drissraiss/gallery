@@ -28,7 +28,7 @@
             </div>
         </div>
     @empty
-        <h4 class="fst-italic mark">NB: This category is empty. Please add images for it to appear here.</h4>
+        <h4 class="fst-italic mark">{{__('category.nb')}}</h4>
     @endforelse
     {{ $category_pictures->links() }}
 @endsection

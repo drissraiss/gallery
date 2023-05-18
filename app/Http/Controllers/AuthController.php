@@ -102,13 +102,13 @@ class AuthController extends Controller
         ]);
         $curr_password = DB::table('users')->get()->where('id', session('id'))->value('password');
         if (!Hash::check($request->curr_password, $curr_password)) {
-            return redirect()->back()->with('error', 'The password you entered is incorrect');
+            return redirect()->back()->with('error', __('flash.pwd_incorrect'));
         }
         $new_password = Hash::make($request->password);
         DB::table('users')->update([
             'password' => $new_password
-        ]);
-        return redirect()->back()->with('success', 'Password has been modified with successfully');
+        ]); 
+        return redirect()->back()->with('success', __('flash.pwd_modif_success'));
     }
     public function drop_account_user(Request $request)
     {
@@ -117,10 +117,10 @@ class AuthController extends Controller
         ]);
         $curr_password = DB::table('users')->get()->where('id', session('id'))->value('password');
         if (!Hash::check($request->password_drop_account, $curr_password)) {
-            return redirect()->back()->with('error', 'The password you entered is incorrect');
+            return redirect()->back()->with('error', __('flash.pwd_incorrect'));
         }
         DB::table("users")->delete(session('id'));
         session()->forget(['id', 'connected']);
-        return redirect()->route('login')->with('success', 'Your account has been deleted successfully');
+        return redirect()->route('login')->with('success', __('flash.acc_del_success'));
     }
 }
