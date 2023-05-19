@@ -22,7 +22,7 @@
 <body dir="{{ $dir }}">
     @yield('alert')
     @if (session('success'))
-        <x-alert alert="Success" bg="success" message="{{ session('success') }}" />
+        <x-alert alert="{{ __('app.success') }}" bg="success" message="{{ session('success') }}" />
     @endif
     <div>
         <section class="vh-100">

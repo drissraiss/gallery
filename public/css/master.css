@@ -1,0 +1,114 @@
+body {
+    background-color: #e6e6e6;
+}
+
+.categories>a>li.list-group-item {
+    cursor: pointer;
+}
+
+.categories #add_category {
+    cursor: pointer;
+    background-color: #eeffee !important;
+}
+
+#nav-cat {
+
+    height: 100vh;
+}
+
+#nav-header {
+    background-color: #e6e6e6;
+    height: 55px;
+}
+
+#title-cat {
+    height: 55px;
+}
+
+.input-text-custom {
+    display: inline-block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.5;
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+
+.disabled-input input,
+.disabled-input select {
+    pointer-events: none;
+    background-color: #f5f5f5;
+    /* Optionally, you can add additional styling to indicate the field is disabled */
+    color: #9b9b9b;
+}
+
+.card-custom-1 {
+    background-color: #e6e6e6
+}
+
+.content-bg {
+    background-color: #e6e6e6
+}
+
+.selected-category-bg {
+    background-color: #0d6efd38
+}
+
+.div-setting>div,
+.div-setting>form {
+    background-color: #f3f3f3b0;
+}
+
+.div-setting h2 {
+    font-weight: 600 !important;
+}
+
+.confirmation-box {
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    padding: 20px;
+    min-width: 400px;
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid rgba(0, 0, 0, 0.493)
+}
+
+.confirmation-box h2 {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.confirmation-box p {
+    margin-bottom: 25px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+}
+
+.confirm-button,
+.cancel-button {
+    padding: 10px 20px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0 10px;
+}
+
+.body {
+    position: relative;
+    filter: blur(2px);
+}
+
+.body * {
+    pointer-events: none;
+}
+

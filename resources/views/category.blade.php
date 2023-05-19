@@ -15,11 +15,11 @@
                             class="input-text-custom">
                     </form>
                     <p class="card-text">{{ $picture->created_at }}</p>
-                    <button class="btn btn-success"><i class="bi bi-arrows-angle-expand"></i></button>
+                    <a href="{{ asset('storage/users_pictures/' . $picture->path) }}" target="_blanck" class="btn btn-success"><i class="bi bi-arrows-angle-expand"></i></a>
                     <a href="{{ asset('storage/users_pictures/' . $picture->path) }}" download="{{ $picture->name }}"
                         class="btn btn-primary"><i class="bi bi-download"></i></a>
                     <form action="{{ route('delete_picture', [$picture->category_id, $picture->id]) }}" method="post"
-                        class="d-inline">
+                        class="d-inline form-remove-picture">
                         @csrf
                         <input type="hidden" name="_method" value="DELETE">
                         <button class="btn btn-outline-danger"><i class="bi bi-trash-fill"></i></button>
@@ -28,7 +28,7 @@
             </div>
         </div>
     @empty
-        <h4 class="fst-italic mark">{{__('category.nb')}}</h4>
+        <h4 class="fst-italic mark">{{ __('category.nb') }}</h4>
     @endforelse
     {{ $category_pictures->links() }}
 @endsection

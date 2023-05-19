@@ -5,7 +5,7 @@
             <h2 class=" mb-4 text-decoration-underline">{{ __('settings.change_lang') }}</h2>
             <div class="form-outline mb-4">
                 <label class="form-label" for="language">{{ __('settings.language') }}:</label>
-                <div class="btn-group btn-group-sm" style="{{ $dir == 'rtl' ? 'left' : 'right' }}: 0;" dir="ltr">
+                <div class="btn-group btn-group" style="{{ $dir == 'rtl' ? 'left' : 'right' }}: 0;" dir="ltr">
                     <a class="btn btn-outline-primary {{ $cur_lang == 'en' ? 'active' : '' }}"
                         href="{{ route('change_lang', 'en') }}">{{ __('login.en') }}</a>
                     <a class="btn btn-outline-primary {{ $cur_lang == 'fr' ? 'active' : '' }}"
@@ -78,7 +78,7 @@
             </div>
             <button class="btn btn-primary w-100 mb-2">{{ __('settings.btn_update_category') }}</button>
         </form>
-        <form action="{{ route('delete_category') }}" class="border mb-4 p-2 " method="POST">
+        <form action="{{ route('delete_category') }}" class="border mb-4 p-2 " method="POST" id="form-remove-category">
             @csrf
             <input type="hidden" name="_method" value="DELETE">
             <h2 class=" mb-4 text-decoration-underline">{{ __('settings.remove_category') }}</h2>
@@ -92,7 +92,7 @@
             <button
                 class="btn btn-outline-danger w-100 mb-2 {{ count($categories) == 0 ? 'disabled' : '' }}">{{ __('settings.btn_remove_category') }}</button>
         </form>
-        <form action="{{ route('drop_account_user') }}" class="border mb-4 p-2" method="POST">
+        <form action="{{ route('drop_account_user') }}" class="border mb-4 p-2" method="POST" id="form-remove-account">
             @csrf
             <input type="hidden" name="_method" value="DELETE">
             <h2 class=" mb-4 text-decoration-underline">{{ __('settings.remove_account') }}</h2>

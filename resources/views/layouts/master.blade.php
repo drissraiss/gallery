@@ -8,81 +8,8 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/favicon.ico') }}">
     <x-Bootstrap_css />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ asset('css/master.css') }}">
     <title>{{ __('app.title') }}</title>
-    <style>
-        body {
-            background-color: #e6e6e6;
-        }
-
-        .categories>a>li.list-group-item {
-            cursor: pointer;
-        }
-
-        .categories>a>li.list-group-item:hover {
-            /*  background-color: rgb(238, 238, 238) */
-        }
-
-        .categories #add_category {
-            cursor: pointer;
-            background-color: #eeffee !important;
-        }
-
-        #nav-cat {
-
-            height: 100vh;
-        }
-
-        #nav-header {
-            background-color: #e6e6e6;
-            height: 55px;
-        }
-
-        #title-cat {
-            height: 55px;
-            justify-content:
-        }
-
-        .input-text-custom {
-            display: inline-block;
-            width: 100%;
-            padding: 0;
-            margin: 0;
-            font-size: 16px;
-            line-height: 1.5;
-            border: none;
-            outline: none;
-            background-color: transparent;
-        }
-
-        .disabled-input input,
-        .disabled-input select {
-            pointer-events: none;
-            background-color: #f5f5f5;
-            /* Optionally, you can add additional styling to indicate the field is disabled */
-            color: #9b9b9b;
-        }
-
-        .card-custom-1 {
-            background-color: #e6e6e6
-        }
-
-        .content-bg {
-            background-color: #e6e6e6
-        }
-
-        .selected-category-bg {
-            background-color: #0d6efd38
-        }
-
-        .div-setting>div,
-        .div-setting>form {
-            background-color: #f3f3f3b0;
-        }
-
-        .div-setting h2 {
-            font-weight: 600 !important;
-        }
-    </style>
 </head>
 
 <body dir="{{ $dir }}">
@@ -103,8 +30,8 @@
     @error('new_name_picture')
         <x-alert alert="{{ __('app.error') }}" bg="danger" :message="$message" />
     @enderror
-    <div class="container-fluid">
-        <div class="row ">
+    <div class="container-fluid" id="body">
+        <div class="row">
             <div class="col-auto p-0" id="nav-cat">
                 <ul class="list-group categories pe-0">
                     <a href="{{ route('home') }}"
@@ -163,9 +90,10 @@
                                     {{ $username }}
                                 </button>
                                 <ul class="dropdown-menu ">
-                                    <li><a class="dropdown-item " href="{{ route('settings') }}">Setting</a></li>
+                                    <li><a class="dropdown-item "
+                                            href="{{ route('settings') }}">{{ __('master.settings') }}</a></li>
                                     <li><a class="dropdown-item text-danger fw-bold"
-                                            href="{{ route('logout') }}">Logout</a></li>
+                                            href="{{ route('logout') }}">{{ __('master.logout') }}</a></li>
                                 </ul>
                             </li>
                         </div>
@@ -179,28 +107,22 @@
             </div>
         </div>
     </div>
+    <!-- s confirm box -->
+    <x-confirm_box id="confirmation-box-picture" title="{{ __('confirm_box.title_picture') }}"
+        message="{{ __('confirm_box.message_picture') }}" confirm="{{ __('confirm_box.confirm') }}"
+        cancel="{{ __('confirm_box.cancel') }}" />
+    <x-confirm_box id="confirmation-box-category" title="{{ __('confirm_box.title_category') }}"
+        message="{{ __('confirm_box.message_category') }}" confirm="{{ __('confirm_box.confirm') }}"
+        cancel="{{ __('confirm_box.cancel') }}" />
+    <x-confirm_box id="confirmation-box-account" title="{{ __('confirm_box.title_account') }}"
+        message="{{ __('confirm_box.message_account') }}" confirm="{{ __('confirm_box.confirm') }}"
+        cancel="{{ __('confirm_box.cancel') }}" />
+
+    <!-- e confirm box -->
     <x-Bootstrap_js />
-    <script>
-        let add_category = document.querySelector('#add_category');
-        let text_add_category = document.querySelector('#text_add_category');
-        let form_add_category = document.querySelector('#form_add_category');
-        let input_add_category = document.querySelector('#input_add_category');
-        let input_text_custom = document.querySelectorAll('.input-text-custom');
-        add_category.onclick = () => {
-            text_add_category.style.display = 'none';
-            form_add_category.style.display = 'block';
-            input_add_category.focus();
-        }
-        input_add_category.onblur = () => {
-            text_add_category.style.display = 'inline';
-            form_add_category.style.display = 'none';
-        }
-        input_text_custom.forEach(element => {
-            element.ondblclick = () => {
-                element.removeAttribute('readonly');
-            }
-        })
-    </script>
+
+    <script src="{{ asset('js/jQuery.js') }}"></script>
+    <script src="{{ asset('js/master.js') }}"></script>
 </body>
 
 </html>

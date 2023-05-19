@@ -7,6 +7,7 @@
             width: 400px;
         }
     </style>
+
     @if (!count($categories))
         <h4 class="fst-italic mark">{{ __('home.nb') }}</h4>
     @endif
@@ -20,8 +21,8 @@
                 <h1 class="text-center">{{ __('home.add_new_pic') }}</h1>
                 <div class="mb-3">
                     <label for="picture_name" class="form-label">{{ __('home.name_pic') }}:</label>
-                    <input type="text" name="picture_name" id="picture_name" value="{{ __('home.value_pic') }}" class="form-control"
-                        value="{{ old('picture_name') }}">
+                    <input type="text" name="picture_name" id="picture_name" value="{{ __('home.value_pic') }}"
+                        class="form-control" value="{{ old('picture_name') }}">
                     @error('picture_name')
                         <x-alert alert="{{ __('app.error') }}" bg='danger' :message="$message" />
                     @enderror
@@ -47,7 +48,8 @@
                         </p>
                     @enderror
                 </div>
-                <button class="btn btn-success mb-3 w-100 {{ count($categories) == 0 ? 'disabled' : '' }}">{{ __('home.btn_add_pic') }}</button>
+                <button
+                    class="btn btn-success mb-3 w-100 {{ count($categories) == 0 ? 'disabled' : '' }}">{{ __('home.btn_add_pic') }}</button>
             </form>
 
         </div>
@@ -60,6 +62,7 @@
             </div>
         </div>
     </div>
+    
     <script>
         let picture = document.getElementById('picture')
         let preview_img = document.getElementById('preview-img')
