@@ -47,16 +47,15 @@ class CategoryController extends Controller
         $categories = CategoryUser::all()->where('user_id', session('id'));
         $categories_with_count = (new CategoryUser())->get_categories_with_count(session('id'));
         $category_id = CategoryUser::where('name', $category)->where('user_id', session('id'))->get('id')->first();
-        
+
         if (is_null($category_id)) {
             return redirect()->back()->with('error', __('flash.cat_not_exist'));
         }
-        
-        $category_pictures = PictureUser::where('category_id', $category_id->id)->orderBy('created_at', 'desc')->paginate(8);
-        //return $category_pictures;
+        $search_query = request()->search_query ?? '';
+        $category_pictures = PictureUser::where('category_id', $category_id->id)->where('name', 'like', "%$search_query%")->orderBy('created_at', 'desc')->paginate(8);
         $category_selected_id = $category_id->id;
         $category_selected_name = $category;
 
-        return view('category', compact("dir", 'username', 'categories', 'categories_with_count', 'category_pictures', 'category_selected_id', 'category_selected_name'));
+        return view('category', compact("dir", 'username', 'categories', 'categories_with_count', 'category_pictures', 'category_selected_id', 'category_selected_name', 'search_query'));
     }
 }

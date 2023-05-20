@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 class OthersController extends Controller
 {
-
     public function change_lang($lang)
     {
         if (in_array($lang, ["en", "fr", "ar"])) {

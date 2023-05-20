@@ -3,16 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Rules\ValidUsername;
-use Illuminate\Http\Request;
-
 use App\Models\CategoryUser;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
-
 use Illuminate\Support\Facades\Hash;
-use function PHPUnit\Framework\isNull;
 use Illuminate\Support\Facades\Cookie;
-
 
 class AuthController extends Controller
 {
@@ -21,7 +17,6 @@ class AuthController extends Controller
     {
         $cur_lang =  App::getLocale();
         $dir = App::getLocale() == "ar" ? "rtl" : "ltr";
-
         // check if cokie_login exists and get info
         $cookie_login_data = json_decode(Cookie::get('cookie_login')) ?? new class
         {
@@ -51,7 +46,6 @@ class AuthController extends Controller
             'password' => Hash::make($request->input('password')),
             'created_at' => now()
         ];
-
         self::signup($data);
         return redirect()->route("login")->with("create_acc_success", 1);
     }
@@ -78,7 +72,8 @@ class AuthController extends Controller
         // for save email and password in cookie
         if ($request->has('remember_me')) {
             $data_json = json_encode(['email' => $request->email, 'password' => $request->password]);
-            $cookie_login = Cookie::make('cookie_login', $data_json/*, path: '/login'*/);
+            $week_with_minutes = 60 * 24 * 7;
+            $cookie_login = Cookie::make('cookie_login', $data_json, $week_with_minutes, '/login');
             Cookie::queue($cookie_login);
         }
         return self::login($account);
@@ -107,7 +102,7 @@ class AuthController extends Controller
         $new_password = Hash::make($request->password);
         DB::table('users')->update([
             'password' => $new_password
-        ]); 
+        ]);
         return redirect()->back()->with('success', __('flash.pwd_modif_success'));
     }
     public function drop_account_user(Request $request)
@@ -122,5 +117,17 @@ class AuthController extends Controller
         DB::table("users")->delete(session('id'));
         session()->forget(['id', 'connected']);
         return redirect()->route('login')->with('success', __('flash.acc_del_success'));
+    }
+    public function settings()
+    {
+
+        $dir = App::getLocale() == "ar" ? "rtl" : "ltr";
+        $cur_lang = App::getLocale();
+        $username = session('username');
+        $categories = CategoryUser::all()->where('user_id', session('id'));
+        $categories_with_count = (new CategoryUser())->get_categories_with_count(session('id'));
+        $category_selected_id = null;
+        $category_selected_name = null;
+        return view('settings', compact('dir', 'username', 'categories', 'cur_lang', 'categories_with_count', 'category_selected_id', 'category_selected_name'));
     }
 }

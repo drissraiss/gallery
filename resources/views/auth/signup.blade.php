@@ -34,11 +34,6 @@
                 <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
-        {{-- <div class="form-outline mb-4">
-            <label class="form-label" for="">:</label>
-            <input type="" id="" class="form-control form-control-lg" />
-        </div> --}}
-
         <div class="d-flex justify-content-around align-items-center mb-4">
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="1" name="conditions" id="conditions" />
@@ -53,7 +48,6 @@
             <p class="text-center fw-bold mx-3 mb-0 text-muted">{{ __('signup.or') }}</p>
         </div>
         <a href="{{ route('login') }}" class="btn btn-outline-primary btn-lg btn-block w-100">{{ __('signup.login') }}</a>
-
     </form>
 @endsection
 <script>

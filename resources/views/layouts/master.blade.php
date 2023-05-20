@@ -57,12 +57,10 @@
                             @csrf
                             <input type="text" id="input_add_category" name="category_name_add" class="form-control"
                                 placeholder="Name category">
-
                         </form>
                     </li>
                 </ul>
             </div>
-
             <div class="col bg-white">
                 <div class="row" id="nav-header">
                     <div class="col p-2 d-flex ">
@@ -77,13 +75,11 @@
                                     <x-category_options :categories="$categories"
                                         selected="{{ old('select_categories_home_shortcut') ?? $category_selected_id }}" />
                                 </select>
-
                                 <input type="file" accept="image/*" name="picture_shortcut"
                                     class="ms-2 form-control">
                                 <button
                                     class="btn btn-success ms-2 {{ count($categories) == 0 ? 'disabled' : '' }}">{{ __('master.add_pic') }}</button>
                             </form>
-
                             <li class="nav-item dropdown list-unstyled w-auto position-static">
                                 <button class="btn dropdown-toggle fw-bold bg-white" data-bs-toggle="dropdown"
                                     aria-expanded="false">
@@ -117,10 +113,8 @@
     <x-confirm_box id="confirmation-box-account" title="{{ __('confirm_box.title_account') }}"
         message="{{ __('confirm_box.message_account') }}" confirm="{{ __('confirm_box.confirm') }}"
         cancel="{{ __('confirm_box.cancel') }}" />
-
     <!-- e confirm box -->
     <x-Bootstrap_js />
-
     <script src="{{ asset('js/jQuery.js') }}"></script>
     <script src="{{ asset('js/master.js') }}"></script>
 </body>

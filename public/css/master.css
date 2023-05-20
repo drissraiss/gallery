@@ -111,4 +111,17 @@ body {
 .body * {
     pointer-events: none;
 }
+.card-img-top {
+    height:300px;
+}
 
+.card-custom-1{
+    position: static;
+}
+.pagination,  .pagination *{
+    position: static;
+}
+#preview-div {
+    background-color: #e6e6e6;
+    width: 400px;
+}

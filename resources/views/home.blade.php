@@ -1,13 +1,6 @@
 @extends('layouts.master')
 
 @section('content')
-    <style>
-        #preview-div {
-            background-color: #e6e6e6;
-            width: 400px;
-        }
-    </style>
-
     @if (!count($categories))
         <h4 class="fst-italic mark">{{ __('home.nb') }}</h4>
     @endif
@@ -51,9 +44,7 @@
                 <button
                     class="btn btn-success mb-3 w-100 {{ count($categories) == 0 ? 'disabled' : '' }}">{{ __('home.btn_add_pic') }}</button>
             </form>
-
         </div>
-
         <div class="mx-4 d-flex" id="preview-div" style=";">
             <img src="{{ asset('assets/gallery.jpg') }}" class="" id="preview-img" style="display: none"
                 width="400px" alt="">
@@ -62,18 +53,4 @@
             </div>
         </div>
     </div>
-    
-    <script>
-        let picture = document.getElementById('picture')
-        let preview_img = document.getElementById('preview-img')
-        let preview_text = document.getElementById('preview-text')
-        picture.onchange = (e) => update_preview(e)
-
-        function update_preview(event) {
-            preview_img.style.display = 'block'
-            preview_text.style.display = 'none'
-            let fileName = URL.createObjectURL(event.target.files[0])
-            preview_img.setAttribute('src', fileName)
-        }
-    </script>
 @endsection

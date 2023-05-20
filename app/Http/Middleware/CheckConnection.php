@@ -22,9 +22,9 @@ class CheckConnection
                 return redirect()->route('login');
             }
         }
-        if ($request->routeIs("login") or $request->routeIs("signup")) {
-            if (session()->has("connected")) {
-                return redirect()->route("home");
+        if ($request->routeIs('login') or $request->routeIs('signup')) {
+            if (session()->has('connected')) {
+                return redirect()->route('home');
             } else {
                 return $next($request);
             }

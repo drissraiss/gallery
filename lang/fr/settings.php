@@ -12,7 +12,7 @@ return [
     'new_name_category' => 'Nouveau nom',
     'btn_update_category' => 'Mettre à jour la catégorie',
     'remove_category' => 'Supprimer une catégorie',
-    'nb' => 'NB : Si vous supprimez une catégorie, vous ne pourrez pas récupérer les images qu\'elle contient',
+    'nb' => 'NB : Si vous supprimez une catégorie, vous ne pourrez pas récupérer les images qu’elle contient',
     'name_category_remove' => 'Catégorie',
     'btn_remove_category' => 'Supprimer la catégorie',
     'remove_account' => 'Supprimer mon compte',

@@ -15,6 +15,6 @@ return [
     'name_category' => 'Ce nom de catégorie existe déjà. Veuillez choisir un nouveau nom',
     'image' => 'le champ image doit être une image',
     'mimes' => [
-        'string' => 'Vous devez choisir une image avec l\'une des extensions suivantes : jpeg,png,jpg,gif',
+        'string' => 'Vous devez choisir une image avec l’une des extensions suivantes : jpeg,png,jpg,gif',
     ],
 ];

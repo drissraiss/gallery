@@ -1,26 +1,7 @@
-$(".alert").click( function () {
+$(".alert").click(function () {
     $(this).hide();
 });
-let add_category = document.querySelector("#add_category");
-let text_add_category = document.querySelector("#text_add_category");
-let form_add_category = document.querySelector("#form_add_category");
-let input_add_category = document.querySelector("#input_add_category");
-let input_text_custom = document.querySelectorAll(".input-text-custom");
-add_category.onclick = () => {
-    text_add_category.style.display = "none";
-    form_add_category.style.display = "block";
-    input_add_category.focus();
-};
-input_add_category.onblur = () => {
-    text_add_category.style.display = "inline";
-    form_add_category.style.display = "none";
-};
-input_text_custom.forEach((element) => {
-    element.ondblclick = () => {
-        element.removeAttribute("readonly");
-    };
-});
-
+// s boc confirm
 $(".form-remove-picture").on("submit", function (e) {
     e.preventDefault();
     $("#confirmation-box-picture").fadeIn();
@@ -75,5 +56,35 @@ $("#form-remove-account").on("submit", function (e) {
         );
     });
 });
+// e boc confirm
+let add_category = document.querySelector("#add_category");
+let text_add_category = document.querySelector("#text_add_category");
+let form_add_category = document.querySelector("#form_add_category");
+let input_add_category = document.querySelector("#input_add_category");
+let input_text_custom = document.querySelectorAll(".input-text-custom");
+add_category.onclick = () => {
+    text_add_category.style.display = "none";
+    form_add_category.style.display = "block";
+    input_add_category.focus();
+};
+input_add_category.onblur = () => {
+    text_add_category.style.display = "inline";
+    form_add_category.style.display = "none";
+};
+input_text_custom.forEach((element) => {
+    element.ondblclick = () => {
+        element.removeAttribute("readonly");
+    };
+});
 
-function cancel_remove_category() {}
+let picture = document.getElementById("picture");
+let preview_img = document.getElementById("preview-img");
+let preview_text = document.getElementById("preview-text");
+picture.onchange = (e) => update_preview(e);
+
+function update_preview(event) {
+    preview_img.style.display = "block";
+    preview_text.style.display = "none";
+    let fileName = URL.createObjectURL(event.target.files[0]);
+    preview_img.setAttribute("src", fileName);
+}
