@@ -11,4 +11,5 @@ return [
     "create_acc" => "Create account",
     "success" => "Congratulations",
     "acc_created_success" => "Your account has been created successfully",
+    'forgotpassword' => 'Forgot password?'
 ];

@@ -5,7 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OthersController;
 use App\Http\Controllers\PictureController;
 use App\Http\Controllers\CategoryController;
-
+use App\Http\Controllers\ForgotPasswordController;
 
 Route::get('/', [PictureController::class, 'create'])->name('home');
 
@@ -33,3 +33,8 @@ Route::delete('delete_picture/{category_id}/{picture_id}', [PictureController::c
 
 Route::get('settings', [AuthController::class, 'settings'])->name('settings');
 Route::put('update_password', [AuthController::class, 'update_password'])->name('update_password');
+
+Route::get('forgot_password', [ForgotPasswordController::class, 'forgot_password_form'])->name('forgot_password_form');
+Route::get('change_password', [ForgotPasswordController::class, 'change_password'])->name('change_password');
+Route::post('try_changepassword', [ForgotPasswordController::class, 'try_changepassword'])->name('try_changepassword');
+Route::post('forgot_password', [ForgotPasswordController::class, 'forgot_password'])->name('forgot_password');

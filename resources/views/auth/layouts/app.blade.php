@@ -20,6 +20,11 @@
 </head>
 
 <body dir="{{ $dir }}">
+    @if (session('success'))
+        <x-alert alert="{{ __('app.success') }}" bg="success" message="{{ session('success') }}" />
+    @elseif (session('error'))
+        <x-alert alert="{{ __('app.error') }}" bg="danger" message="{{ session('error') }}" />
+    @endif
     @yield('alert')
     @if (session('success'))
         <x-alert alert="{{ __('app.success') }}" bg="success" message="{{ session('success') }}" />
