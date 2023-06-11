@@ -21,7 +21,7 @@
         </div>
         <div class="form-outline mb-4">
             <label class="form-label" for="password">{{ __('signup.psw') }} :</label>
-            <input type="password" id="password" name="password" class="form-control form-control-lg" value='12345678'/>
+            <input type="password" id="password" name="password" class="form-control form-control-lg" />
             @error('password')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
@@ -29,7 +29,7 @@
         <div class="form-outline mb-4">
             <label class="form-label" for="password_confirmation">{{ __('signup.psw_conf') }} :</label>
             <input type="password" id="password_confirmation" name="password_confirmation"
-                class="form-control form-control-lg" value='12345678' />
+                class="form-control form-control-lg" />
             @error('password_confirmation')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
